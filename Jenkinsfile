@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/Pravalikaa18/python-cicd-demo.git'
+                git branch: 'main', url: 'https://github.com/Pravalikaa18/python-cicd-demo.git'
             }
         }
 
