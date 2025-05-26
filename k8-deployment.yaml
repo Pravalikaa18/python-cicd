@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: k8deploy
+  name: k8deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: k8deploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: k8deploy
+    spec:
+      containers:
+      - image: pravalikaa18/python-cicd-app
+        name: python-cicd-app
+        resources: {}
+status: {}
