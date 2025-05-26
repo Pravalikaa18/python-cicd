@@ -8,14 +8,14 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git branch: 'main', url: 'https://github.com/Pravalikaa18/python-cicd-demo.git'
+                git branch: 'main', url: 'https://github.com/Pravalikaa18/python-cicd.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${IMAGE_NAME}")
+                   sh 'docker build -t "${IMAGE_NAME}" .'
                 }
             }
         }
