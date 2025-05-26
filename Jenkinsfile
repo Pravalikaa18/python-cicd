@@ -22,20 +22,19 @@ pipeline {
 
         stage('Push to DockerHub') {
             steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'Dockerhub') {
-                        docker.image("${IMAGE_NAME}").push("latest")
-                    }
+                    withCredentials([usernamePassword(credentialsId: 'Dockerhub' , usernameVariable: 'DOCKER_USER' , passwordVariable: 'DOCKER_PASS')]){
+                        sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+                        sh "docker push ${env.IMAGE_NAME}:$(env.IMAGE_TAG}"
                 }
             }
         }
 
         stage('Deploy to Kubernetes') {
             steps {
-                script {
+                    withCredentials([file(credentialsId: 'kubeconfig' , variable: 'KUBECONFIG')]) {
                     sh 'kubectl apply -f k8s/deployment.yaml'
                     sh 'kubectl apply -f k8s/service.yaml'
-                }
+                
             }
         }
     }
